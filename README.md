@@ -1,18 +1,18 @@
 # bayerstraits_16s
 # This is a temp version of bayerstraits_16s
-##Install
+## Install
 pip install bayerstraits_16s\
 in preparation: anaconda download caozhichongchong/bayerstraits_16s
 
-##Test (any of these two commands)
+## Test (any of these two commands)
 bayerstraits_16s --test\
 bayerstraits_16s -t your.otu.table -s your.otu.seqs
 
-##Availability
+## Availability
 in preparation: https://anaconda.org/caozhichongchong/bayerstraits_16s\
 in preparation: https://pypi.org/project/bayerstraits_16s/
 
-##How to use it
+## How to use it
 1. test the bayerstraits_16s\
 bayerstraits_16s --test
 
@@ -33,13 +33,13 @@ your.own.reference.traits is a metadata of whether there's trait in your genomes
 Genome_ID1   0\
 Genome_ID1   1
 
-##Introduction
+## Introduction
 bayerstraits_16s infers traits by 16S\
 input: otu table (-t) and otu sequences (-s)\
 requirement: mafft\
 Optional: fasttree
 
-##Copyright
+## Copyright
 Copyright:An Ni Zhang, Prof. Eric Alm, MIT\
 Citation:\
 Contact anniz44@mit.edu
