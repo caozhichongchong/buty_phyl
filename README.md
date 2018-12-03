@@ -9,8 +9,9 @@ bayerstraits_16s --test\
 bayerstraits_16s -t your.otu.table -s your.otu.seqs
 
 ## Availability
-in preparation: https://anaconda.org/caozhichongchong/bayerstraits_16s\
-in preparation: https://pypi.org/project/bayerstraits_16s/
+in preparation: https://anaconda.org/caozhichongchong/bayerstraits_16s
+
+https://pypi.org/project/bayerstraits_16s
 
 ## How to use it
 1. test the bayerstraits_16s\
