@@ -3,7 +3,7 @@ from setuptools import setup
 setup(
     name="bayerstraits_16s",
     packages=['bayerstraits_16s'],
-    version="1.0.1",
+    version="1.0.2",
     description="Inferring traits by 16S",
     author='Anni Zhang',
     author_email='anniz44@mit.edu',
@@ -15,7 +15,6 @@ setup(
     long_description=open('README.md').read(),
     package_dir={'bayerstraits_16s': 'bayerstraits_16s'},
     package_data={'bayerstraits_16s': ['scripts/*','data/*','example/*']},
-    #data_files=[('data',['data/ARG_rank.txt'])],
     entry_points={'console_scripts': ['bayerstraits_16s = bayerstraits_16s.__main__:main']},
     #zip_safe=False,
     #setup_requires=['pytest-runner'],
