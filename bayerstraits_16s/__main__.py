@@ -47,7 +47,7 @@ def main():
                         default='default', metavar='default or your own reference 16s sequences')
     parser.add_argument("--rt",
                         help="the reference data of gene traits", type=str,
-                        default='default ', metavar='default or your own reference traits')
+                        default='default', metavar='default or your own reference traits')
     parser.add_argument("--th",
                         help="number of threads", type=int, default=1, metavar=1)
     parser.add_argument("--test",
@@ -93,7 +93,7 @@ def main():
     except IOError:
         cmd = 'python ' + workingdir + '/scripts/OTU.filter.py -t ' + str(input_table) + ' -s ' + str(input_seq) \
                + ' -top ' + str(args.top) + ' -r ' + str(args.r) + '/Filtered_OTU \n'
-        #os.system(cmd)
+        os.system(cmd)
         f1.write(cmd)
     # align the otus with reference 16S
     print('align the otus sequences with reference 16S sequences\nit takes quite a while...')
@@ -102,24 +102,24 @@ def main():
     except IOError:
         cmd = 'cat ' + str(args.r) + '/Filtered_OTU/' + str(otuseq) + '.filter ' + str(ref_tree) + ' > ' + \
                str(args.r) + '/Filtered_OTU/' + str(otuseq) + '.filter.16S \n'
-        #os.system(cmd)
+        os.system(cmd)
         f1.write(cmd)
         # InferTraits
         cmd = args.m + ' --nuc --adjustdirection --quiet --maxiterate 0 --retree 2 --nofft --thread ' + str(
             args.th) + ' ' + \
                str(args.r) + '/Filtered_OTU/' + str(otuseq) + '.filter.16S > ' + \
                str(args.r) + '/Filtered_OTU/' + str(otuseq) + '.filter.align.16S \n'
-        #os.system(cmd)
+        os.system(cmd)
         f1.write(cmd)
         print('alignment finished!\nnow we are building the tree\nit also takes quite a while...')
         cmd = 'python ' + workingdir + '/scripts/treeformat.py -a ' + str(args.r) + \
                '/Filtered_OTU/' + str(otuseq) + '.filter.align.16S \n'
-        #os.system(cmd)
+        os.system(cmd)
         f1.write(cmd)
         cmd = ft_path + ' -quiet -fastest -nt -nosupport ' + str(args.r) + '/Filtered_OTU/' + \
                str(otuseq) + '.filter.align.16S.format > ' + \
                str(args.r) + '/Filtered_OTU/' + str(otuseq) + '.filter.align.16S.nwk \n'
-        #os.system(cmd)
+        os.system(cmd)
         f1.write(cmd)
     # run BayersTraits
     # build the model
@@ -134,7 +134,7 @@ def main():
                str(ref_traits) + ' -a ' + \
                str(args.r) + '/Filtered_OTU/' + str(otutable) + '.abu.table -r ' \
                + str(args.r) + '/Bayers_model -b ' + str(workingdir + "/scripts/inferTraits.py") + ' \n'
-        #os.system(cmd)
+        os.system(cmd)
         f1.write(cmd)
     f1.close()
 
