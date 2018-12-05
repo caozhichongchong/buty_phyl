@@ -41,7 +41,7 @@ def main():
                         default='/usr/local/bin/mafft', metavar='mafft')
     parser.add_argument("--ft",
                         help="the path of fasttree", type=str,
-                        default='default', metavar='default built-in FastTree or your FastTree')
+                        default='/usr/local/bin/FastTree', metavar='your FastTree')
     parser.add_argument("--rs",
                         help="the reference 16S", type=str,
                         default='default', metavar='default or your own reference 16s sequences')
@@ -60,14 +60,9 @@ def main():
     else:
         ref_tree = args.rs
     if args.rt == 'default':
-        ref_traits = os.path.join(workingdir, 'data/Genome_butyrate_either.txt')
+        ref_traits = os.path.join(workingdir, 'data/Genome_butyrate_buk_ptbORbut.txt')
     else:
         ref_traits = args.rt
-    if args.ft == 'default':
-        ft_path = os.path.join(workingdir, 'scripts/FastTree')
-        os.system('chmod 400 ' + ft_path)
-    else:
-        ft_path = args.ft
     if args.test:
         input_table = os.path.join(workingdir, 'example/example.otu_table')
         input_seq = os.path.join(workingdir, 'example/example.otu_seqs')
@@ -98,7 +93,7 @@ def main():
     # align the otus with reference 16S
     print('align the otus sequences with reference 16S sequences\nit takes quite a while...')
     try:
-        ftry = open(str(args.r) + '/Filtered_OTU/' + str(otuseq) + '.filter.align.16S.nwk', 'r')
+        ftry = open(str(args.r) + '/Filtered_OTU/' + str(otuseq) + '.filter.align.16S', 'r')
     except IOError:
         cmd = 'cat ' + str(args.r) + '/Filtered_OTU/' + str(otuseq) + '.filter ' + str(ref_tree) + ' > ' + \
                str(args.r) + '/Filtered_OTU/' + str(otuseq) + '.filter.16S \n'
@@ -111,12 +106,15 @@ def main():
                str(args.r) + '/Filtered_OTU/' + str(otuseq) + '.filter.align.16S \n'
         os.system(cmd)
         f1.write(cmd)
-        print('alignment finished!\nnow we are building the tree\nit also takes quite a while...')
+    print('alignment finished!\nnow we are building the tree\nit also takes quite a while...')
+    try:
+        ftry = open(str(args.r) + '/Filtered_OTU/' + str(otuseq) + '.filter.align.16S.nwk', 'r')
+    except IOError:
         cmd = 'python ' + workingdir + '/scripts/treeformat.py -a ' + str(args.r) + \
                '/Filtered_OTU/' + str(otuseq) + '.filter.align.16S \n'
         os.system(cmd)
         f1.write(cmd)
-        cmd = ft_path + ' -quiet -fastest -nt -nosupport ' + str(args.r) + '/Filtered_OTU/' + \
+        cmd = args.ft + ' -quiet -fastest -nt -nosupport ' + str(args.r) + '/Filtered_OTU/' + \
                str(otuseq) + '.filter.align.16S.format > ' + \
                str(args.r) + '/Filtered_OTU/' + str(otuseq) + '.filter.align.16S.nwk \n'
         os.system(cmd)

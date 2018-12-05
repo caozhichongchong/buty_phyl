@@ -21,8 +21,8 @@ parser.add_argument("-r",
                     help="results_dir", type=str, default='Bayers_model',metavar='Bayers_model')
 parser.add_argument("-b",
                     help="dir to inferTraits tool", type=str,
-                    default='scripts/inferTraits.py',
-                    metavar='scripts/inferTraits.py')
+                    default='inferTraits.py',
+                    metavar='inferTraits.py')
 
 
 ################################################## Definition ########################################################
@@ -40,30 +40,34 @@ def Traitspredicting(filename):
     for OTUs in Tempdf.index:
         OTUwithTraits.setdefault(OTUs,float(Tempdf.loc[OTUs]))
     OTU_table = pd.read_csv(args.a, sep='\t')
-    Newrow = ['Traits']
+    Newrow = ['Abu_with_Traits']
     Newrow = Newrow + [0]*(len(OTU_table.columns)-1)
     OTU_table.loc[-1] = Newrow
     OTU_table.set_index(OTU_table.columns[0],inplace=True)
-    #OTU_table.tail()
+    # abundance times butyrate producing score
     for OTUs in OTU_table.index:
         try:
-            OTU_table.loc['Traits'] += OTU_table.loc[OTUs]*OTUwithTraits[OTUs]
+            OTU_table.loc[OTUs] = OTU_table.loc[OTUs]*OTUwithTraits[OTUs]
         except KeyError:
             pass
-    #OTU_table.loc['Traits'] = OTU_table.loc['Traits'] / 2.0 # add itself againt
-    OTU_table.to_csv(os.path.join(args.r, treefile + '.infertraits.abu'), sep='\t', header=True)
+    # calculate total abundance of butyrate producing OTUs
+    for OTUs in OTU_table.index:
+        try:
+            if OTUs != 'Abu_with_Traits':
+                OTU_table.loc['Abu_with_Traits'] += OTU_table.loc[OTUs]
+        except KeyError:
+            pass
+    Newrow = OTU_table.loc['Abu_with_Traits']
+    OTU_table[0:-1].to_csv(os.path.join(args.r, treefile + '.infertraits.otu_table'),
+                                                     sep='\t', header=True)
+    Newrow.to_csv(os.path.join(args.r, treefile + '.infertraits.abu'), sep='\t',
+                                                       header=True)
 
 
 ################################################### Programme #######################################################
 rootofus, treefile = os.path.split(args.t)
-flog=open('inferTraits.log','w')
-flog.write('python '+args.b+' -t ' + str(args.t) + ' -n ' + \
-           str(args.n)+' -rd ' + \
-           str(args.rd) +' -r ' \
-           + str(args.r) + ' \n')
 os.system('python '+args.b+' -t ' + str(args.t) + ' -n ' + \
            str(args.n)+' -rd ' + \
            str(args.rd) +' -r ' \
            + str(args.r) )
 Traitspredicting(os.path.join(args.r,treefile+'.infertraits.txt'))
-
