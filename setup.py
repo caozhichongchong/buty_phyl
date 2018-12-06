@@ -3,7 +3,7 @@ from setuptools import setup
 setup(
     name="bayerstraits_16s",
     packages=['bayerstraits_16s'],
-    version="1.0.3",
+    version="1.0.4",
     description="Inferring traits by 16S",
     author='Anni Zhang',
     author_email='anniz44@mit.edu',

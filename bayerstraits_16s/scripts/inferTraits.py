@@ -109,7 +109,7 @@ def up_pass(parent_chars,clade,data,anno):
         if clade.is_terminal():
             return
     else:
-        # correct scores for internal clades using parent scores?
+        # correct scores for internal clades using parent scores
         # based on the scores of parent and itself
         if clade.name in data:
             data[clade.name] = pars([data[clade.name],parent_chars])
