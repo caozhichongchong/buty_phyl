@@ -1,10 +1,10 @@
 # bayerstraits_16s
 # This is a temp version of bayerstraits_16s
 ## Introduction
-* bayerstraits_16s infers traits by 16S\
-* input: otu table (-t) and otu sequences (-s)\
-* requirement: mafft\
-* Optional: fasttree\
+* bayerstraits_16s infers traits by 16S
+* input: otu table (-t) and otu sequences (-s)
+* requirement: mafft
+* Optional: fasttree
 ![alt text](https://raw.githubusercontent.com/caozhichongchong/bayerstraits_16s/master/Methodology.png)
 
 ## Install
@@ -41,7 +41,17 @@ ATGC...
 Genome_ID1   0\
 Genome_ID1   1
 
+## Results
+The result dir of "Bayers_model":
+* `filename.infertraits.txt`: the OTUs inferring as butyrate-producing bacteria (1.0, 0.5) 
+and non-butyrate-producing bacteria (0.0).
+* `filename.infertraits.abu`: the total abundance of butyrate-producing bacteria in all samples.
+* `filename.infertraits.otu_table`: the otu_table of butyrate-producing bacteria in all samples.
+
+The result dir of "Filtered_OTU":
+* Some temp files of filtered OTUs, alignment, and tree.
+
 ## Copyright
-Copyright:An Ni Zhang, Prof. Eric Alm, MIT\
-Citation:\
+Copyright: An Ni Zhang, Prof. Eric Alm, Alm Lab in MIT\
+Citation: Not yet, coming soon!\
 Contact: anniz44@mit.edu
