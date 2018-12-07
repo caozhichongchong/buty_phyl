@@ -49,7 +49,8 @@ def Traitspredicting(filename):
         try:
             OTU_table.loc[OTUs] = OTU_table.loc[OTUs]*OTUwithTraits[OTUs]
         except KeyError:
-            pass
+            # OTUs with low abundance that are filtered out
+            OTU_table.loc[OTUs] = OTU_table.loc[OTUs] * 0.0
     # calculate total abundance of butyrate producing OTUs
     for OTUs in OTU_table.index:
         try:
