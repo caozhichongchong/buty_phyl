@@ -9,7 +9,7 @@ parser = argparse.ArgumentParser(formatter_class=argparse.RawDescriptionHelpForm
 parser.add_argument("-s",
                     help="file name of your otu_seq", type=str, default='a.otu.fasta',metavar='a.otu.fasta')
 parser.add_argument("-r",
-                    help="results_dir", type=str, default='BayersTraits',metavar='BayersTraits')
+                    help="results_dir", type=str, default='ButyFull',metavar='ButyFull')
 parser.add_argument("-rd",
                     help="the reference data of gene traits", type=str, default='Data.txt',metavar='Data.txt')
 parser.add_argument("-a",

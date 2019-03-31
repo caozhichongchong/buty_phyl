@@ -1,9 +1,9 @@
 from setuptools import setup
 
 setup(
-    name="bayerstraits_16s",
-    packages=['bayerstraits_16s'],
-    version="1.0.5",
+    name="buty_full",
+    packages=['buty_full'],
+    version="1.0.1",
     description="Inferring traits by 16S",
     author='Anni Zhang',
     author_email='anniz44@mit.edu',
@@ -13,9 +13,9 @@ setup(
     #install_requires=['python>=3.0'],
     include_package_data=True,
     long_description=open('README.md').read(),
-    package_dir={'bayerstraits_16s': 'bayerstraits_16s'},
-    package_data={'bayerstraits_16s': ['scripts/*','data/*','example/*']},
-    entry_points={'console_scripts': ['bayerstraits_16s = bayerstraits_16s.__main__:main']},
+    package_dir={'buty_full': 'buty_full'},
+    package_data={'buty_full': ['scripts/*','data/*','example/*']},
+    entry_points={'console_scripts': ['buty_full = buty_full.__main__:main']},
     #zip_safe=False,
     #setup_requires=['pytest-runner'],
     #tests_require=['pytest'],
