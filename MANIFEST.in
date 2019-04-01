@@ -1,4 +1,4 @@
-include buty_full/scripts/*
-include buty_full/data/*
-include buty_full/example/*
+include buty_phyl/scripts/*
+include buty_phyl/data/*
+include buty_phyl/example/*
 include README.md

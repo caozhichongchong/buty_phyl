@@ -1,9 +1,9 @@
 from setuptools import setup
 
 setup(
-    name="buty_full",
-    packages=['buty_full'],
-    version="1.0.1",
+    name="buty_phyl",
+    packages=['buty_phyl'],
+    version="1.0",
     description="Inferring traits by 16S",
     author='Anni Zhang',
     author_email='anniz44@mit.edu',
@@ -13,9 +13,9 @@ setup(
     #install_requires=['python>=3.0'],
     include_package_data=True,
     long_description=open('README.md').read(),
-    package_dir={'buty_full': 'buty_full'},
-    package_data={'buty_full': ['scripts/*','data/*','example/*']},
-    entry_points={'console_scripts': ['buty_full = buty_full.__main__:main']},
+    package_dir={'buty_phyl': 'buty_phyl'},
+    package_data={'buty_phyl': ['scripts/*','data/*','example/*']},
+    entry_points={'console_scripts': ['buty_phyl = buty_phyl.__main__:main']},
     #zip_safe=False,
     #setup_requires=['pytest-runner'],
     #tests_require=['pytest'],

@@ -1,40 +1,40 @@
-# buty_full
+# buty_phyl
 ## Introduction
-* buty_full infers traits by 16S
+* buty_phyl infers traits by 16S
 * input: otu table (-t) and otu sequences (-s)
 * requirement: mafft
 * Optional: fasttree
-![alt text](https://raw.githubusercontent.com/caozhichongchong/buty_full/master/Methodology.png)
+![alt text](https://raw.githubusercontent.com/caozhichongchong/buty_phyl/master/Methodology.png)
 
 ## Install
-`pip install buty_full`\
-in preparation: `anaconda download caozhichongchong/buty_full`
+`pip install buty_phyl`\
+in preparation: `anaconda download caozhichongchong/buty_phyl`
 
 ## Availability
-in preparation: https://anaconda.org/caozhichongchong/buty_full
+in preparation: https://anaconda.org/caozhichongchong/buty_phyl
 
-https://pypi.org/project/buty_full
+https://pypi.org/project/buty_phyl
 
 ## How to use it
-1. test the buty_full\
-`buty_full --test`
+1. test the buty_phyl\
+`buty_phyl --test`
 
 2. try your data\
-`buty_full -t your.otu.table -s your.otu.seqs`\
-`buty_full -t your.otu.table -s your.otu.seqs -top 2000`
+`buty_phyl -t your.otu.table -s your.otu.seqs`\
+`buty_phyl -t your.otu.table -s your.otu.seqs -top 2000`
 
 3. try different traits (default is butyrate production)\
 predicting butyrate production\
-`buty_full -t your.otu.table -s your.otu.seqs --rs your.own.reference.16s`\
+`buty_phyl -t your.otu.table -s your.otu.seqs --rs your.own.reference.16s`\
 or\
-`buty_full -t your.otu.table -s your.otu.seqs --rs your.own.reference.16s --rt b`\
+`buty_phyl -t your.otu.table -s your.otu.seqs --rs your.own.reference.16s --rt b`\
 predicting sulfate reduction (in preparation, not yet)\
-`buty_full -t your.otu.table -s your.otu.seqs --rs your.own.reference.16s --rt s`\
+`buty_phyl -t your.otu.table -s your.otu.seqs --rs your.own.reference.16s --rt s`\
 predicting nitrate reduction (in preparation, not yet)\
-`buty_full -t your.otu.table -s your.otu.seqs --rs your.own.reference.16s --rt n`
+`buty_phyl -t your.otu.table -s your.otu.seqs --rs your.own.reference.16s --rt n`
 
 4. use your own traits\
-`buty_full -t your.otu.table -s your.otu.seqs --rs your.own.reference.16s --rt your.own.reference.traits`
+`buty_phyl -t your.otu.table -s your.otu.seqs --rs your.own.reference.16s --rt your.own.reference.traits`
 
 * your.own.reference.16s is a fasta file containing the 16S sequences of your genomes\
 \>Genome_ID1\
