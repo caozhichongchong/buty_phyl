@@ -25,9 +25,6 @@ parser.add_argument("-rd",
                     help="the reference data of gene traits", type=str, default='Data.txt',metavar='Data.txt')
 parser.add_argument("-r",
                     help="results_dir", type=str, default='ButyPhyl',metavar='ButyPhyl')
-parser.add_argument("-tag",
-                    help="the name of traits", type=str, default='',metavar='pathogen')
-
 
 ################################################## Definition ########################################################
 args = parser.parse_args()

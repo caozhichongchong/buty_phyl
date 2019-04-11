@@ -25,6 +25,8 @@ parser.add_argument("-rd",
                     help="the reference data of gene traits", type=str, default='Data.txt',metavar='Data.txt')
 parser.add_argument("-r",
                     help="results_dir", type=str, default='Bayers_model',metavar='Bayers_model')
+parser.add_argument("-tag",
+                    help="the name of traits", type=str, default='',metavar='pathogen')
 
 
 ################################################## Definition ########################################################
@@ -151,11 +153,10 @@ old_names = dict([ (v,k) for (k,v) in nodename.items() ]) #123->abc.fasta
 new_names = dict([ (v,k) for (k,v) in internal_names.items() ]) #789_123->123
 
 missing = []
-f1=open(os.path.join(args.r,filename+'.infertraits.txt'),'w')
+f1=open(os.path.join(args.r,filename+'.infertraits'+args.tag+'.txt'),'w')
 # output the mean score of the scores with the highest agreement (0.0, 0.5 or 1.0)
 for k,v in leaves:
     if new_names[k] in old_names and k not in anno:
-        print ([v,np.mean(list(map(int, list(v))))])
         f1.write(old_names[new_names[k]]+'\t'+str(np.mean(list(map(int, list(v)))))+'\n')
     else:
         missing += [new_names[k]]

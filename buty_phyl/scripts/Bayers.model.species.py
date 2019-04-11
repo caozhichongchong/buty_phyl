@@ -30,7 +30,7 @@ parser.add_argument("-b",
 parser.add_argument("--p",
                         help="further seperate the pathogens and commensals", type=str,
                         default='FALSE', metavar='FALSE or TRUE')
-parser.add_argument("--s",
+parser.add_argument("--sp",
                         help="further infer the species", type=str,
                         default='FALSE', metavar='FALSE or TRUE or your own reference species list')
 
@@ -43,7 +43,7 @@ except OSError:
 
 
 ################################################### Function ########################################################
-def Traitspredicting(filename, pathogen, speciesfile):
+def Traitspredictingspecies(filename, pathogen, speciesfile):
     # load traits
     Tempdf = pd.read_csv(filename, sep='\t',index_col=0,header=None)
     OTUwithTraits=dict()
@@ -106,6 +106,12 @@ def Traitspredicting(filename, pathogen, speciesfile):
         Sprowbpb.to_csv(os.path.join(args.r, treefile + '.bpbspecies.abu'), sep='\t',
                       header=True)
     else:
+        # load abu file
+        OTU_table = pd.read_csv(args.a, sep='\t')
+        Newrow = ['Abu_with_Traits']
+        Newrow = Newrow + [0] * (len(OTU_table.columns) - 1)
+        OTU_table.loc[-1] = Newrow
+        OTU_table.set_index(OTU_table.columns[0], inplace=True)
         # load traits of pathogen
         Tempdfpathogen = pd.read_csv(pathogen, sep='\t', index_col=0, header=None)
         OTUwithPathogenTraits = dict()
@@ -186,6 +192,37 @@ def Traitspredicting(filename, pathogen, speciesfile):
                         header=True)
 
 
+def Traitspredicting(filename):
+    Tempdf = pd.read_csv(filename, sep='\t',index_col=0,header=None)
+    OTUwithTraits=dict()
+    for OTUs in Tempdf.index:
+        OTUwithTraits.setdefault(OTUs,float(Tempdf.loc[OTUs]))
+    OTU_table = pd.read_csv(args.a, sep='\t')
+    Newrow = ['Abu_with_Traits']
+    Newrow = Newrow + [0]*(len(OTU_table.columns)-1)
+    OTU_table.loc[-1] = Newrow
+    OTU_table.set_index(OTU_table.columns[0],inplace=True)
+    # abundance times butyrate producing score
+    for OTUs in OTU_table.index:
+        try:
+            OTU_table.loc[OTUs] = OTU_table.loc[OTUs]*OTUwithTraits[OTUs]
+        except KeyError:
+            # OTUs with low abundance that are filtered out
+            OTU_table.loc[OTUs] = OTU_table.loc[OTUs] * 0.0
+    # calculate total abundance of butyrate producing OTUs
+    for OTUs in OTU_table.index:
+        try:
+            if OTUs != 'Abu_with_Traits':
+                OTU_table.loc['Abu_with_Traits'] += OTU_table.loc[OTUs]
+        except KeyError:
+            pass
+    Newrow = OTU_table.loc['Abu_with_Traits']
+    OTU_table[0:-1].to_csv(os.path.join(args.r, treefile + '.infertraits.otu_table'),
+                                                     sep='\t', header=True)
+    Newrow.to_csv(os.path.join(args.r, treefile + '.infertraits.abu'), sep='\t',
+                                                       header=True)
+
+
 ################################################### Programme #######################################################
 rootofus, treefile = os.path.split(args.t)
 traitdir, traitfile = os.path.split(args.rd)
@@ -193,19 +230,26 @@ os.system('python '+args.b+' -t ' + str(args.t) + ' -n ' + \
            str(args.n)+' -rd ' + \
            str(args.rd) +' -r ' \
            + str(args.r) )
-os.system(('python '+args.b+' -t ' + str(args.t) + ' -n ' + \
-           str(args.n)+' -rd ' + \
-           str(args.s) +' -r ' \
-           + str(args.r)).replace('inferTraits.py','inferTraits_species.py'))
 if args.p != 'FALSE':
-    os.system('python ' + args.b + ' -t ' + str(args.t) + ' -n ' + \
+    os.system(('python ' + args.b + ' -t ' + str(args.t) + ' -n ' + \
               str(args.n) + ' -rd ' + \
               str(args.p) + ' -r ' \
-              + str(args.r) + ' -tag .pathogen')
-    Traitspredicting(os.path.join(args.r, treefile + '.infertraits.txt'),
+              + str(args.r) + ' -tag .pathogen'))
+    os.system(('python ' + args.b + ' -t ' + str(args.t) + ' -n ' + \
+               str(args.n) + ' -rd ' + \
+               str(args.sp) + ' -r ' \
+               + str(args.r)).replace('inferTraits.py', 'inferTraits_species.py'))
+    Traitspredictingspecies(os.path.join(args.r, treefile + '.infertraits.txt'),
                      os.path.join(args.r, treefile + '.infertraits.pathogen.txt'),
                      os.path.join(args.r, treefile + '.infertraits.species.txt'))
-else:
-    Traitspredicting(os.path.join(args.r, treefile + '.infertraits.txt'),
+elif args.sp !='FALSE':
+    os.system(('python ' + args.b + ' -t ' + str(args.t) + ' -n ' + \
+               str(args.n) + ' -rd ' + \
+               str(args.sp) + ' -r ' \
+               + str(args.r)).replace('inferTraits.py', 'inferTraits_species.py'))
+    Traitspredictingspecies(os.path.join(args.r, treefile + '.infertraits.txt'),
                      args.p,
                      os.path.join(args.r, treefile + '.infertraits.species.txt'))
+else:
+    Traitspredicting(os.path.join(args.r,treefile+'.infertraits.txt'))
+

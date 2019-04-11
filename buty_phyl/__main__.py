@@ -56,7 +56,7 @@ def main():
     parser.add_argument("--p",
                         help="further seperate the pathogens and commensals", type=str,
                         default='FALSE', metavar='FALSE or TRUE or your own reference pathogen list')
-    parser.add_argument("--s",
+    parser.add_argument("--sp",
                         help="further infer the species", type=str,
                         default='FALSE', metavar='FALSE or TRUE or your own reference species list')
     ################################################## Definition ########################################################
@@ -71,14 +71,16 @@ def main():
     if args.rt == 'b':
         ref_traits = os.path.join(workingdir, 'data/GMC_CG_buk_ptbORbut.txt')
         ref_tree = os.path.join(workingdir, 'data/GMC_CG_16S.fasta')
-        if args.p == 'TRUE':
-            ref_pathogen = os.path.join(workingdir, 'data/GMC_CG_pathogen.txt')
-        else:
-            ref_pathogen = args.p
-        if args.s == 'TRUE':
+        if args.sp == 'TRUE':
             ref_sp = os.path.join(workingdir, 'data/GMC_CG_species.txt')
         else:
-            ref_sp = args.p
+            ref_sp = args.sp
+        if args.p == 'TRUE':
+            ref_pathogen = os.path.join(workingdir, 'data/GMC_CG_pathogen.txt')
+            if args.sp == 'FALSE':
+                ref_sp = os.path.join(workingdir, 'data/GMC_CG_species.txt')
+        else:
+            ref_pathogen = args.p
     elif args.rt == 'n':
         ref_traits = os.path.join(workingdir,'data/Genome_NR.txt')
     elif args.rt == 's':
@@ -149,7 +151,7 @@ def main():
         ftry = open(str(result_dir) + '/Bayers_model/' + str(otuseq) + '.filter.align.16S.nwk.infertraits.txt', 'r')
     except IOError:
         # InferTraits only
-        if ref_pathogen == 'FALSE':
+        if ref_sp == 'FALSE':
             cmd = 'python ' + workingdir + '/scripts/Bayers.model.py -t ' + str(result_dir) + '/Filtered_OTU/' + str(
                 otuseq) + '.filter.align.16S.nwk -n ' + \
                   str(result_dir) + '/Filtered_OTU/' + str(otuseq) + '.filter.align.16S.format.name -rd ' + \
@@ -163,7 +165,7 @@ def main():
                   str(ref_traits) + ' -a ' + \
                   str(args.r) + '/Filtered_OTU/' + str(otutable) + '.abu.table -r ' \
                   + str(args.r) + '/Bayers_model -b ' + str(workingdir + "/scripts/inferTraits.py") + \
-                  ' --p ' + str(ref_pathogen) + ' --s ' + str(ref_sp) + ' \n'
+                  ' --p ' + str(ref_pathogen) + ' --sp ' + str(ref_sp) + ' \n'
         os.system(cmd)
         f1.write(cmd)
     f1.close()
