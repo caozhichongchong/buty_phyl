@@ -80,6 +80,12 @@ def Traitspredictingspecies(filename, pathogen, speciesfile):
                 # calculate species abundance
                 # calculate bpb species abundance
                 for species in Species[OTUs]:
+                    if species == 'None':
+                        # remove OTUs assigned to 2 species
+                        OTUwithTraits[OTUs] = 0.0
+                    #if OTUwithTraits[OTUs] == 0.5:
+                        # reduce OTUs with uncertainty
+                        #OTUwithTraits[OTUs] = 0.1
                     Sprow.loc[species] += OTU_table.loc[OTUs]
                     Sprowbpb.loc[species] += OTU_table.loc[OTUs] * OTUwithTraits[OTUs]
             except KeyError:
@@ -150,6 +156,12 @@ def Traitspredictingspecies(filename, pathogen, speciesfile):
                 # calculate species abundance
                 # calculate bpb species abundance
                 for species in Species[OTUs]:
+                    if species == 'None':
+                        # remove OTUs assigned to 2 species
+                        OTUwithTraits[OTUs] = 0.0
+                    #if OTUwithTraits[OTUs] == 0.5:
+                        # reduce OTUs with uncertainty
+                        #OTUwithTraits[OTUs] = 0.1
                     Sprow.loc[species] = Sprow.loc[species] + OTU_table.loc[OTUs]
                     Sprowbpb.loc[species] = Sprowbpb.loc[species] + OTU_table_pathogen.loc[OTUs] * \
                                                OTUwithTraits[OTUs] * OTUwithPathogenTraits[OTUs]
@@ -204,6 +216,9 @@ def Traitspredicting(filename):
     OTU_table.set_index(OTU_table.columns[0],inplace=True)
     # abundance times butyrate producing score
     for OTUs in OTU_table.index:
+        #if OTUwithTraits[OTUs] == 0.5:
+            # reduce OTUs with uncertainty
+            #OTUwithTraits[OTUs] = 0.1
         try:
             OTU_table.loc[OTUs] = OTU_table.loc[OTUs]*OTUwithTraits[OTUs]
         except KeyError:

@@ -157,7 +157,7 @@ for k,v in leaves:
         if len(list(v)) == 1:
             f1.write(old_names[new_names[k]]+'\t'
                      +str(v).replace('{','').replace('}','').replace('\'','')+'\n')
-        elif len(list(v)) < 5:
+        elif len(list(v)) < 2:
             f1.write(old_names[new_names[k]]+'\t'+'\t'.join(list(v))+'\n')
         else:
             f1.write(old_names[new_names[k]] + '\tNone\n')

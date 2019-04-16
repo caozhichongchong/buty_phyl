@@ -28,7 +28,7 @@ def main():
     parser = argparse.ArgumentParser(formatter_class=argparse.RawDescriptionHelpFormatter)
     parser.add_argument("-t",
                         help="file name of your otu_table", type=str,
-                        default='your.otu.table', metavar='your.otu.table')
+                        default='example/example.otu_table', metavar='your.otu.table')
     parser.add_argument("-s",
                         help="file name of your otu_seq", type=str,
                         default='your.otu.fasta', metavar='your.otu.fasta')
@@ -91,9 +91,15 @@ def main():
         input_table = os.path.join(workingdir, 'example/example.otu_table')
         input_seq = os.path.join(workingdir, 'example/example.otu_seqs')
     else:
-        input_table = args.t
-        input_seq = args.s
-    result_dir = args.r + '_' + args.rt
+        if args.t == 'example/example.otu_table':
+            print('testing buty_phyl')
+            input_table = os.path.join(workingdir, 'example/example.otu_table')
+            input_seq = os.path.join(workingdir, 'example/example.otu_seqs')
+        else:
+            input_table = args.t
+            input_seq = args.s
+    #result_dir = args.r + '_' + os.path.split(ref_traits)[-1]
+    result_dir = args.r
     try:
         os.mkdir(result_dir)
     except OSError:
@@ -157,7 +163,8 @@ def main():
                   str(result_dir) + '/Filtered_OTU/' + str(otuseq) + '.filter.align.16S.format.name -rd ' + \
                   str(ref_traits) + ' -a ' + \
                   str(result_dir) + '/Filtered_OTU/' + str(otutable) + '.abu.table -r ' \
-                  + str(result_dir) + '/Bayers_model -b ' + str(workingdir + "/scripts/inferTraits.py") + ' \n'
+                  + str(result_dir) + '/Bayers_model -b ' + str(workingdir + "/scripts/inferTraits.py") + \
+                  ' --p '+str(ref_pathogen)+' \n'
         else:
             cmd = 'python ' + workingdir + '/scripts/Bayers.model.species.py -t ' + str(args.r) + '/Filtered_OTU/' + str(
                 otuseq) + '.filter.align.16S.nwk -n ' + \

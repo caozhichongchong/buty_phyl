@@ -33,7 +33,19 @@ def Maxabu(Abus):
     return Abumax
 
 
+def biomTOcsv(otutablefile):
+    os.system('biom convert -i ' + otutablefile +
+    ' -o ' + otutablefile + '.otu_table.temp.txt --to-tsv')
+    os.system('sed 1d ' + otutablefile + '.otu_table.temp.txt > '
+    + otutablefile + '.otu_table.txt')
+    os.system('rm -rf ' + otutablefile + '.otu_table.temp.txt')
+    return otutablefile + '.otu_table.txt'
+
+
 def Tableinput(otutablefile,topnumber):
+    filenames, fileextensions = os.path.splitext(otutablefile)
+    if fileextensions == '.biom':
+        otutablefile = biomTOcsv(otutablefile)
     OTUtable=dict()
     OTUtop=[]
     rootofutb, otutable = os.path.split(otutablefile)
@@ -49,9 +61,13 @@ def Tableinput(otutablefile,topnumber):
     Abus.sort(reverse=True)
     f1 = open(os.path.join(args.r,otutable+'.max.abu'),'w')
     for OTUs in OTUtable:
-        if OTUtable[OTUs] >= Abus[topnumber-1] and OTUtable[OTUs] >= 0.00001:
-            f1.write(str(OTUs)+'\t'+str(OTUtable[OTUs])+'\n')
-            OTUtop.append(OTUs)
+        try:
+            if OTUtable[OTUs] >= Abus[topnumber-1]:
+                f1.write(str(OTUs)+'\t'+str(OTUtable[OTUs])+'\n')
+                OTUtop.append(str(OTUs))
+        except IndexError:
+            f1.write(str(OTUs) + '\t' + str(OTUtable[OTUs]) + '\n')
+            OTUtop.append(str(OTUs))
     f1.close()
     return OTUtop
 
@@ -59,8 +75,14 @@ def Tableinput(otutablefile,topnumber):
 def Tableoutput(OTUtop,otuseqfile):
     rootofus, otuseq = os.path.split(otuseqfile)
     f1 = open(os.path.join(args.r,otuseq+'.filter'),'w')
+    Write = 0
     for record in SeqIO.parse(open(otuseqfile, 'r'), 'fasta'):
-        if record.id in OTUtop:
+        if str(record.id) in OTUtop:
+            Write = 1
             f1.write('>' + str(record.id) + '\n' + str(str(record.seq)) + '\n')
+    f1.close()
+    if Write == 0:
+        print('WRANING: please make sure the OTU IDs/names in OTU table and OTU seqs are the same!!!\n')
+        print('If you see this warning, please check your input files, delete the result folder and re-run the scripts.')
 ################################################### Programme #######################################################
 Tableoutput(Tableinput(args.t,args.top),args.s)
