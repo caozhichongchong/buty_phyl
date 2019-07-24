@@ -25,13 +25,13 @@ https://pypi.org/project/buty_phyl
 
 3. try different traits (default is butyrate production)\
 predicting butyrate production\
-`buty_phyl -t your.otu.table -s your.otu.seqs --rs your.own.reference.16s`\
+`buty_phyl -t your.otu.table -s your.otu.seqs`\
 or\
-`buty_phyl -t your.otu.table -s your.otu.seqs --rs your.own.reference.16s --rt b`\
-predicting sulfate reduction (in preparation, not yet)\
-`buty_phyl -t your.otu.table -s your.otu.seqs --rs your.own.reference.16s --rt s`\
-predicting nitrate reduction (in preparation, not yet)\
-`buty_phyl -t your.otu.table -s your.otu.seqs --rs your.own.reference.16s --rt n`
+`buty_phyl -t your.otu.table -s your.otu.seqs --rt b`\
+predicting sulfate reduction\
+`buty_phyl -t your.otu.table -s your.otu.seqs --rt s`\
+predicting nitrate reduction\
+`buty_phyl -t your.otu.table -s your.otu.seqs --rt n`
 
 4. use your own traits\
 `buty_phyl -t your.otu.table -s your.otu.seqs --rs your.own.reference.16s --rt your.own.reference.traits`
@@ -48,10 +48,16 @@ Genome_ID1   1
 
 ## Results
 The result dir of "Bayers_model":
-* `filename.infertraits.txt`: the OTUs inferring as butyrate-producing bacteria (1.0, 0.5) 
+* `filename.infertraits.txt`: the OTUs inferring as butyrate-producing bacteria (1.0), unknown bacteria (0.5), 
 and non-butyrate-producing bacteria (0.0).
-* `filename.infertraits.abu`: the total abundance of butyrate-producing bacteria in all samples.
-* `filename.infertraits.otu_table`: the otu_table of butyrate-producing bacteria in all samples.
+* `filename.infertraits.abu`: the total abundance of butyrate-producing bacteria.
+* `filename.infertraits.commensal.abu`: the total abundance of commensal butyrate-producing bacteria.
+* `filename.infertraits.pathogen.abu`: the total abundance of pathogenic butyrate-producing bacteria.
+* `filename.infertraits.otu_table`: the otu_table of butyrate-producing bacteria.
+* `filename.infertraits.commensal.otu_table`: the otu_table of commensal butyrate-producing bacteria.
+* `filename.infertraits.pathogen.otu_table`: the otu_table of pathogenic butyrate-producing bacteria.
+* `filename.bpbspecies.commensal.abu`: the abundance of commensal butyrate-producing species.
+* `filename.bpbspecies.pathogen.abu`: the abundance of pathogenic butyrate-producing species.
 
 The result dir of "Filtered_OTU":
 * Some temp files of filtered OTUs, alignment, and tree.

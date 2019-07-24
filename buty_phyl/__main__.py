@@ -65,28 +65,27 @@ def main():
     ref_pathogen = 'FALSE'
     ref_sp = 'FALSE'
     if args.rs == 'default':
-        ref_tree = os.path.join(workingdir,'data/Complete_genome_16S.fasta')
+        ref_tree = os.path.join(workingdir, 'data/GMC_CG_16S.fasta')
     else:
         ref_tree = args.rs
     if args.rt == 'b':
         ref_traits = os.path.join(workingdir, 'data/GMC_CG_buk_ptbORbut.txt')
-        ref_tree = os.path.join(workingdir, 'data/GMC_CG_16S.fasta')
-        if args.sp == 'TRUE':
-            ref_sp = os.path.join(workingdir, 'data/GMC_CG_species.txt')
-        else:
-            ref_sp = args.sp
-        if args.p == 'TRUE':
-            ref_pathogen = os.path.join(workingdir, 'data/GMC_CG_pathogen.txt')
-            if args.sp == 'FALSE':
-                ref_sp = os.path.join(workingdir, 'data/GMC_CG_species.txt')
-        else:
-            ref_pathogen = args.p
     elif args.rt == 'n':
-        ref_traits = os.path.join(workingdir,'data/Genome_NR.txt')
+        ref_traits = os.path.join(workingdir,'data/GMC_CG_napORnar_nir.txt')
     elif args.rt == 's':
-        ref_traits = os.path.join(workingdir, 'data/Genome_SRB.txt')
+        ref_traits = os.path.join(workingdir, 'data/GMC_CG_sat_apr_dsr.txt')
     else:
         ref_traits = args.rt
+    if args.sp == 'TRUE':
+        ref_sp = os.path.join(workingdir, 'data/GMC_CG_species.txt')
+    else:
+        ref_sp = args.sp
+    if args.p == 'TRUE':
+        ref_pathogen = os.path.join(workingdir, 'data/GMC_CG_pathogen.txt')
+        if args.sp == 'FALSE':
+            ref_sp = os.path.join(workingdir, 'data/GMC_CG_species.txt')
+    else:
+        ref_pathogen = args.p
     if args.test:
         input_table = os.path.join(workingdir, 'example/example.otu_table')
         input_seq = os.path.join(workingdir, 'example/example.otu_seqs')

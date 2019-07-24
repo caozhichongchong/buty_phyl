@@ -3,7 +3,7 @@ from setuptools import setup
 setup(
     name="buty_phyl",
     packages=['buty_phyl'],
-    version="1.0.3",
+    version="1.0.5",
     description="Inferring traits by 16S",
     author='Anni Zhang',
     author_email='anniz44@mit.edu',
@@ -13,6 +13,7 @@ setup(
     #install_requires=['python>=3.0'],
     include_package_data=True,
     long_description=open('README.md').read(),
+    long_description_content_type='text/markdown',
     package_dir={'buty_phyl': 'buty_phyl'},
     package_data={'buty_phyl': ['scripts/*','data/*','example/*']},
     entry_points={'console_scripts': ['buty_phyl = buty_phyl.__main__:main']},
