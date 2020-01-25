@@ -3,7 +3,7 @@ from setuptools import setup
 setup(
     name="buty_phyl",
     packages=['buty_phyl'],
-    version="1.0.5",
+    version="1.0.7",
     description="Inferring traits by 16S",
     author='Anni Zhang',
     author_email='anniz44@mit.edu',

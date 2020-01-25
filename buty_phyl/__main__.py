@@ -43,19 +43,19 @@ def main():
                         help="the path of fasttree", type=str,
                         default='/usr/local/bin/FastTree', metavar='your FastTree')
     parser.add_argument("--rs",
-                        help="the reference 16S", type=str,
-                        default='default', metavar='default or your own reference 16s sequences')
+                        help="the reference 16S or your own reference 16s sequences", type=str,
+                        default='genome', metavar='genome (for full 16S), meta or metagenome (for V4-V5 16S)')
     parser.add_argument("--rt",
                         help="the reference data of gene traits", type=str,
                         default='b', metavar='b (for butyrate), or n (for nitrate), or s (for sulfate),' +
-                                                    ' or your own reference traits')
+                                                    ' AHR_1 (for AHR pathway 1), AHR_2 (for AHR pks path), AHR_all (for 2 AHR pathways)')
     parser.add_argument("--th",
                         help="number of threads", type=int, default=1, metavar=1)
     parser.add_argument("--test",
                         help="test the buty_phyl", action="store_true")
     parser.add_argument("--p",
                         help="further seperate the pathogens and commensals", type=str,
-                        default='FALSE', metavar='FALSE or TRUE or your own reference pathogen list')
+                        default='TRUE', metavar='FALSE or TRUE or your own reference pathogen list')
     parser.add_argument("--sp",
                         help="further infer the species", type=str,
                         default='FALSE', metavar='FALSE or TRUE or your own reference species list')
@@ -64,28 +64,53 @@ def main():
     workingdir=os.path.abspath(os.path.dirname(__file__))
     ref_pathogen = 'FALSE'
     ref_sp = 'FALSE'
-    if args.rs == 'default':
+    if args.rs == 'genome':
         ref_tree = os.path.join(workingdir, 'data/GMC_CG_16S.fasta')
-    else:
-        ref_tree = args.rs
-    if args.rt == 'b':
-        ref_traits = os.path.join(workingdir, 'data/GMC_CG_buk_ptbORbut.txt')
-    elif args.rt == 'n':
-        ref_traits = os.path.join(workingdir,'data/GMC_CG_napORnar_nir.txt')
-    elif args.rt == 's':
-        ref_traits = os.path.join(workingdir, 'data/GMC_CG_sat_apr_dsr.txt')
-    else:
-        ref_traits = args.rt
-    if args.sp == 'TRUE':
-        ref_sp = os.path.join(workingdir, 'data/GMC_CG_species.txt')
-    else:
-        ref_sp = args.sp
-    if args.p == 'TRUE':
-        ref_pathogen = os.path.join(workingdir, 'data/GMC_CG_pathogen.txt')
-        if args.sp == 'FALSE':
+        if args.rt == 'b': #butyrate
+            ref_traits = os.path.join(workingdir, 'data/GMC_CG_buk_ptbORbut.txt')
+        elif args.rt == 'n': #nitrate
+            ref_traits = os.path.join(workingdir,'data/GMC_CG_napORnar_nir.txt')
+        elif args.rt == 's': #sulfate
+            ref_traits = os.path.join(workingdir, 'data/GMC_CG_sat_apr_dsr.txt')
+        elif args.rt == 'AHR_1': #AHR 3 of 4 gene pathway
+            ref_traits = os.path.join(workingdir, 'data/GMC_CG_AHR_gene_3ofpath.txt')
+        elif args.rt == 'AHR_2': #AHR 3 of 3 pks genes
+            ref_traits = os.path.join(workingdir, 'data/GMC_CG_AHR_gene_3ofpks.txt')
+        elif args.rt == 'AHR_all': #AHR either 1 pathways
+            ref_traits = os.path.join(workingdir, 'data/GMC_CG_AHR_2path.txt')
+        else:
+            ref_traits = args.rt
+        if args.sp == 'TRUE':
             ref_sp = os.path.join(workingdir, 'data/GMC_CG_species.txt')
+        else:
+            ref_sp = args.sp
+        if args.p == 'TRUE':
+            ref_pathogen = os.path.join(workingdir, 'data/GMC_CG_pathogen.txt')
+            ef_sp = os.path.join(workingdir, 'data/GMC_CG_species.txt')
+        else:
+            ref_pathogen = args.p
+    elif args.rs == 'meta' or args.rs == 'metagenome':
+        ref_tree = os.path.join(workingdir, 'data/GMC_CG_16S.fasta.all.V4_V5.fasta')
+        if args.rt == 'b': #butyrate
+            ref_traits = os.path.join(workingdir, 'data/GMC_CG_buk_ptbORbut.V4_V5.txt')
+        else:
+            ref_traits = args.rt
+        if args.sp == 'TRUE':
+            ref_sp = os.path.join(workingdir, 'data/GMC_CG_species.V4_V5.txt')
+        else:
+            ref_sp = args.sp
+        if args.p == 'TRUE':
+            ref_pathogen = os.path.join(workingdir, 'data/GMC_CG_pathogen.V4_V5.txt')
+            ref_sp = os.path.join(workingdir, 'data/GMC_CG_species.V4_V5.txt')
+        else:
+            ref_pathogen = args.p
     else:
+        # use your own reference 16S
+        ref_tree = args.rs
+        ref_traits = args.rt
+        ref_sp = args.sp
         ref_pathogen = args.p
+        ref_sp = args.sp
     if args.test:
         input_table = os.path.join(workingdir, 'example/example.otu_table')
         input_seq = os.path.join(workingdir, 'example/example.otu_seqs')
