@@ -44,7 +44,7 @@ def main():
                         default='/usr/local/bin/FastTree', metavar='your FastTree')
     parser.add_argument("--rs",
                         help="the reference 16S or your own reference 16s sequences", type=str,
-                        default='genome', metavar='genome (for full 16S), meta or metagenome (for V4-V5 16S)')
+                        default='genome', metavar='genome or 16S (for full 16S), meta or metagenome (for V4-V5 16S)')
     parser.add_argument("--rt",
                         help="the reference data of gene traits", type=str,
                         default='b', metavar='b (for butyrate), or n (for nitrate), or s (for sulfate),' +
@@ -64,7 +64,7 @@ def main():
     workingdir=os.path.abspath(os.path.dirname(__file__))
     ref_pathogen = 'FALSE'
     ref_sp = 'FALSE'
-    if args.rs == 'genome':
+    if args.rs == 'genome' or args.rs == '16S' or args.rs == '16s':
         ref_tree = os.path.join(workingdir, 'data/GMC_CG_16S.fasta')
         if args.rt == 'b': #butyrate
             ref_traits = os.path.join(workingdir, 'data/GMC_CG_buk_ptbORbut.txt')
