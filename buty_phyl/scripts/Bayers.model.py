@@ -131,7 +131,7 @@ os.system('python '+args.b+' -t ' + str(args.t) + ' -n ' + \
 if args.p != 'FALSE':
     os.system('python ' + args.b + ' -t ' + str(args.t) + ' -n ' + \
               str(args.n) + ' -rd ' + \
-              str(args.p) + ' -r ' \
+              str(args.rd) + ' -r ' \
               + str(args.r) + ' -tag .pathogen')
     Traitspredicting(os.path.join(args.r, treefile + '.infertraits.txt'),
                      os.path.join(args.r, treefile + '.infertraits.pathogen.txt'))

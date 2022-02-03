@@ -140,7 +140,7 @@ tree = Phylo.read(treefile, 'newick')
 # assign names to internal nodes
 internal_names = assign_internal_names(tree)
 # switch annotations to new names
-anno = dict([ (internal_names[nodename[k]],v) for (k,v) in anno.items() ])
+anno = dict([ (internal_names[nodename[k]],v) for (k,v) in anno.items() if k in nodename])
 
 # data stores the scores of internal and terminal clades
 data = {}
